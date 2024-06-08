@@ -20,7 +20,7 @@
     // }
     // const A=5
 
-    // //Let
+    //Let
     // let name ="MindX"
     // {
     //     let name = "MindX School"
@@ -47,24 +47,26 @@
     // console.log(arr)
 
     //Map - C2
+    // let arr = [1,2,3,4,5,6]
     // let arr1 = arr.map((item) => {
     //     return item*2;
     // })
     // console.log(arr1)
 
     //Filter
-    //let arr = [1,2,3,4,5,6]
+    // let arr = [1,2,3,4,5,6]
     // Trả về các phần tử có giá trị lớn hơn 3
     // let arr3 = arr.filter((item)=>{
     //     return item>3;
     // })
     // console.log(arr3)
 
-    //Sum
+    // //Sum
     // let value = 0;
     // const number = [10,20,30]
     // for(let i = 0; i < number.length; i++){
-    //     value += number[i];
+        // value += number[i];
+        // value = value + number[i]
     // }
     // console.log(value);
 
@@ -137,6 +139,27 @@
     //     return map;
     // },createMap)
     // console.log(createMap)
+
+    const url = 'https://quotes15.p.rapidapi.com/quotes/random/?language_code=en';
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': 'd75d5ecfbfmsh55e3603115709bap1c829bjsnf31772e97696',
+        'x-rapidapi-host': 'quotes15.p.rapidapi.com'
+      }
+    };
+
+    async function quote(){
+      try {
+        const response = await fetch(url, options);
+        const result = await response.text();
+        console.log(result);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+   console.log(quote())
+   
 </script>
 
 </body>
