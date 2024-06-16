@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trinidad COVID-19 Statistics</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f8f9fa;
+    }
+    .stats-box {
+      max-width: 800px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="stats-box">
+  <h1 class="mb-4 text-center">Trinidad COVID-19 Statistics</h1>
+  <div id="stats">
+    <!-- Data will be inserted here -->
+  </div>
+  <button class="btn btn-primary mt-3" onclick="fetchStats()">Refresh Data</button>
+</div>
+
+<script>
+const url = 'https://trinidad-covid-19-statistics.p.rapidapi.com/latestday';
+const options = {
+  method: 'GET',
+  headers: {
+    'x-rapidapi-key': 'd75d5ecfbfmsh55e3603115709bap1c829bjsnf31772e97696',
+    'x-rapidapi-host': 'trinidad-covid-19-statistics.p.rapidapi.com'
+  }
+};
+
+async function fetchStats(){
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    console.log(result)
+    displayStats(result);
+  } catch (error) {
+    console.error(error);
+    document.getElementById('stats').textContent = 'An error occurred. Please try again.';
+  }
+}
+
+function displayStats(data) {
+  const stats = data[0];
+  const statsDiv = document.getElementById('stats');
+
+  statsDiv.innerHTML = `
+    <p><strong>Date:</strong> ${stats.id}</p>
+    <p><strong>Latest Vaccinated with 2 doses (SinoAZPf):</strong> ${stats.latestVax2SinoAZPf}</p>
+    <p><strong>Latest Active Cases:</strong> ${stats.latestActive}</p>
+    <p><strong>Latest Deaths:</strong> ${stats.latestDeath}</p>
+    <p><strong>Latest State:</strong> ${stats.latestState}</p>
+    <p><strong>Latest Home Isolation:</strong> ${stats.latestHomeIso}</p>
+    <p><strong>Latest Hospitalized:</strong> ${stats.latestHospital}</p>
+    <p><strong>Latest Recoveries:</strong> ${stats.latestRecovery}</p>
+    <p><strong>Latest Tests:</strong> ${stats.latestTest}</p>
+    <p><strong>Latest Total Positive Cases:</strong> ${stats.latestTotalPos}</p>
+    <p><strong>Latest Vaccinated with 1 dose:</strong> ${stats.latestVax1}</p>
+    <p><strong>Latest Vaccinated with 2 doses:</strong> ${stats.latestVax2}</p>
+    <p><strong>Latest Vaccinated with 3 doses:</strong> ${stats.latestVax3}</p>
+    <p><strong>Latest Vaccinated with 2 doses (JJ):</strong> ${stats.latestVax2JJ}</p>
+    <p><strong>Latest Positive Cases:</strong> ${stats.latestPos}</p>
+    <p><strong>Population:</strong> ${stats.population}</p>
+  `;
+}
+
+fetchStats();
+</script>
+
+</body>
+</html>
